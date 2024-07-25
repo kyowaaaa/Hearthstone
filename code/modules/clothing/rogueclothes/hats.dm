@@ -80,8 +80,8 @@
 	sewrepair = TRUE
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/AdjustClothes(mob/user)
-	//Snowflake verb for Shalal specifically.
-		if(loc == user)
+/obj/item/clothing/head/roguetown/roguehood/AdjustClothes(mob/user)
+	if(loc == user)
 		if(adjustable == CAN_CADJUST)
 			adjustable = CADJUSTED
 			if(toggle_icon_state)
