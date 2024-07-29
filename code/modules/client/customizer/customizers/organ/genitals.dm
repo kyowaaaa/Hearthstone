@@ -325,8 +325,32 @@
 /datum/customizer_choice/organ/vagina
 	abstract_type = /datum/customizer_choice/organ/vagina
 	name = "Vagina"
+	customizer_entry_type = /datum/customizer_entry/organ/vagina
 	organ_type = /obj/item/organ/vagina
 	organ_slot = ORGAN_SLOT_VAGINA
+	organ_dna_type = /datum/organ_dna/vagina
+
+/datum/customizer_entry/organ/vagina
+	var/fertility = TRUE
+
+/datum/customizer_choice/organ/vagina/imprint_organ_dna(datum/organ_dna/organ_dna, datum/customizer_entry/entry, datum/preferences/prefs)
+	..()
+	var/datum/organ_dna/vagina/vagina_dna = organ_dna
+	var/datum/customizer_entry/organ/vagina/vagina_entry = entry
+	vagina_dna.fertility = vagina_entry.fertility
+
+/datum/customizer_choice/organ/vagina/generate_pref_choices(list/dat, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
+	..()
+	var/datum/customizer_entry/organ/vagina/vagina_entry = entry
+	dat += "<br>Fertile: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=fertile''>[vagina_entry.fertility ? "Fertile" : "Sterile"]</a>"
+
+/datum/customizer_choice/organ/vagina/handle_topic(mob/user, list/href_list, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
+	..()
+	var/datum/customizer_entry/organ/vagina/vagina_entry = entry
+	switch(href_list["customizer_task"])
+		if("fertile")
+			vagina_entry.fertility = !vagina_entry.fertility
+			
 
 /datum/customizer/organ/vagina/human
 	customizer_choices = list(/datum/customizer_choice/organ/vagina/human)
